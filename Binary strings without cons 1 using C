@@ -1,0 +1,55 @@
+Binary string without consecutive 1's using C problem solved by Md. Asif Imtiyaj Chowdhury.
+
+#include<stdio.h>
+#include<stdlib.h>
+
+void allString(int k, char str[], int num)
+{
+    if(num == k)
+    {
+        str[num] = '\0'; //terminate binary string
+        printf(str);
+        printf(" ");
+
+        return;
+    }
+    if(str[num-1] == '1') //if previous char is '1' then we put only 0 at the end of string. i.e. '01' = '010'
+    {
+        str[num] = '0';
+        allString(k, str, num+1);
+    }
+    if(str[num-1] == '0') // if previous char '0' then we put both '1' and '0' at the end of string i.e. '00' = '001' and '000'
+    {
+        str[num] = '0';
+        allString(k, str, num+1);
+
+        str[num] = '1';
+        allString(k, str, num+1);
+    }
+}
+
+void allStringWithOut1(int k)
+{
+    if(k <= 0)
+    {
+        return;
+    }
+    char str[k];
+    //generate all binary string starts with '0'
+    str[0] = '0';
+    allString(k, str, 1);
+
+    //generate all binary string starts with '1'
+    str[0] = '1';
+    allString(k, str, 1);
+}
+
+int main()
+{
+    int k;
+    scanf("%d", &k);
+
+    allStringWithOut1(k);
+
+    return 0;
+}
