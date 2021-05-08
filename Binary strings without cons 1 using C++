@@ -1,0 +1,57 @@
+Binary string without consecutive 1's using C++ problem solved by Md. Asif Imtiyaj Chowdhury.
+
+#include<iostream>
+#include<bits/stdc++.h>
+
+using namespace std;
+
+void allStringUtil(int k, char str[], int num)
+{
+    if(num == k) //print binary string without cons 1's
+    {
+        str[num] = '0'; // terminate binary string
+        cout << str << " ";
+        return;
+    }
+    //if previous char is '1' then we put only '0' at the end of the string i.e. '01' == '010'
+    if(str[num-1] == '1')
+    {
+        str[0] = '0';
+        allStringUtil(k, str, num+1);
+    }
+    //if previous char is '0' then we put both '1' and '0' at the end of the string i.e. '00' == '001' and '000'
+    if(str[num-1] == '0')
+    {
+        str[0] = '0';
+        allStringUtil(k, str, num+1);
+
+        str[0] = '1';
+        allStringUtil(k, str, num+1);
+    }
+}
+
+void allString(int k)
+{
+    if(k <= 0) //base case
+    {
+        return;
+    }
+    char str[k]; //length of string is k
+
+    str[0] = '0'; //generating binary strings start with '0'
+    allStringUtil(k, str, 1);
+
+    str[0] = '1'; //generating binary strings start with '1'
+    allStringUtil(k, str, 1);
+}
+
+int main()
+{
+    int k;
+    cin >> k;
+
+    allString(k);
+
+    return 0;
+}
+
